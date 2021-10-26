@@ -35,12 +35,12 @@ public class CompanyController {
         return this.companyRepository.findEmployeesById(id);
     }
 
-//    // /employees?page=1&pageSize=5
-//    @GetMapping(params = {"page", "size"})
-//    public PageImpl<Employee> findByPageAndPageSize (@PageableDefault Pageable pageable) {
-//        return this.employeeRepository.findPagingEmployees(pageable);
-//    }
-//
+    // /companies?page=1&pageSize=5
+    @GetMapping(params = {"page", "size"})
+    public PageImpl<Company> findByPageAndPageSize (@PageableDefault Pageable pageable) {
+        return this.companyRepository.findPagingCompanies(pageable);
+    }
+
 //    // post
 //    @PostMapping
 //    public Employee createEmployee(@RequestBody Employee employee){

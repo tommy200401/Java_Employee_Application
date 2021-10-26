@@ -34,4 +34,9 @@ public class CompanyRepository {
         return this.companies.stream().filter(item->id.equals(item.getId())).findFirst().orElseThrow(CompanyNotFoundException::new).getEmployees();
     }
 
+    public PageImpl<Company> findPagingCompanies (Pageable pageable) {
+        List<Company> page = this.companies.stream().skip((long)pageable.getPageNumber() * pageable.getPageSize()).limit(pageable.getPageSize()).collect(Collectors.toList());
+        return new PageImpl<>(page, pageable, this.companies.size());
+    }
+
 }

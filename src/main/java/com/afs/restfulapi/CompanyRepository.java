@@ -39,4 +39,10 @@ public class CompanyRepository {
         return new PageImpl<>(page, pageable, this.companies.size());
     }
 
+    public Company createCompany (Company company) {
+        int id = this.companies.stream().mapToInt(Company::getId).max().orElse(0)+1;
+        company.setId(id);
+        this.companies.add(company);
+        return company;
+    }
 }

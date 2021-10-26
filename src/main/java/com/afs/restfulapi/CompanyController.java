@@ -41,12 +41,12 @@ public class CompanyController {
         return this.companyRepository.findPagingCompanies(pageable);
     }
 
-//    // post
-//    @PostMapping
-//    public Employee createEmployee(@RequestBody Employee employee){
-//        return this.employeeRepository.createEmployee(employee);
-//    }
-//
+    // post
+    @PostMapping
+    public Company createCompany(@RequestBody Company company){
+        return this.companyRepository.createCompany(company);
+    }
+
 //    // delete
 //    @DeleteMapping("/{id}")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)  // Code=204

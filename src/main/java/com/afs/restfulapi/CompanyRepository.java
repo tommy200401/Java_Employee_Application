@@ -17,6 +17,10 @@ public class CompanyRepository {
 
     List<String> employees;
 
+    public List<Company> findAll(){
+        return companies;
+    }
+
     public CompanyRepository() {
         companies.add(new Company(1, "Agile", "StartUp", new ArrayList<>()));
     }

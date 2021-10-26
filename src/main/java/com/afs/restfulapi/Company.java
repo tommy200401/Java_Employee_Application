@@ -19,9 +19,6 @@ public class Company {
         return id;
     }
 
-    public String getCompanyName() {
-        return companyName;
-    }
 
     public String getBasicInfo() {
         return basicInfo;
@@ -35,9 +32,6 @@ public class Company {
         this.id = id;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
 
     public void setBasicInfo(String basicInfo) {
         this.basicInfo = basicInfo;

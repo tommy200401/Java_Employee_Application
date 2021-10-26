@@ -27,8 +27,11 @@ public class CompanyRepository {
     }
 
     public Company findById(Integer id){
-        return this.companies.stream().filter(item->id.equals(item.getId())).findFirst().orElseThrow(EmployeeNotFoundException::new);
+        return this.companies.stream().filter(item->id.equals(item.getId())).findFirst().orElseThrow(CompanyNotFoundException::new);
     }
 
+    public List<String> findEmployeesById(Integer id){
+        return this.companies.stream().filter(item->id.equals(item.getId())).findFirst().orElseThrow(CompanyNotFoundException::new).getEmployees();
+    }
 
 }

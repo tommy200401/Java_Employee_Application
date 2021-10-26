@@ -29,12 +29,12 @@ public class CompanyController {
         return this.companyRepository.findById(id);
     }
 
-//    // /employees?gender=male
-//    @GetMapping(params = "gender")
-//    public List<Employee> findByGender(@RequestParam String gender) {
-//        return this.employeeRepository.findByGender(gender);
-//    }
-//
+    // /companies/{id}/employees
+    @GetMapping("/{id}/employees")
+    public List<String> findEmployeesById (@PathVariable Integer id) {
+        return this.companyRepository.findEmployeesById(id);
+    }
+
 //    // /employees?page=1&pageSize=5
 //    @GetMapping(params = {"page", "size"})
 //    public PageImpl<Employee> findByPageAndPageSize (@PageableDefault Pageable pageable) {

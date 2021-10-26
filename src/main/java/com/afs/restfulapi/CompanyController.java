@@ -22,13 +22,13 @@ public class CompanyController {
     public List<Company> findAllCompanies() {
         return this.companyRepository.findAll();
     }
-//
-//    // /employees/{id}
-//    @GetMapping("/{id}")
-//    public Employee findById(@PathVariable Integer id) {
-//        return this.employeeRepository.findById(id);
-//    }
-//
+
+    // /companies/{id}
+    @GetMapping("/{id}")
+    public Company findById(@PathVariable Integer id) {
+        return this.companyRepository.findById(id);
+    }
+
 //    // /employees?gender=male
 //    @GetMapping(params = "gender")
 //    public List<Employee> findByGender(@RequestParam String gender) {

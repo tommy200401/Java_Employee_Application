@@ -31,37 +31,37 @@ public class CompanyController {
 
     // /companies/{id}/employees
     @GetMapping("/{id}/employees")
-    public List<String> findEmployeesById (@PathVariable Integer id) {
+    public List<String> findEmployeesById(@PathVariable Integer id) {
         return this.companyRepository.findEmployeesById(id);
     }
 
     // /companies?page=1&pageSize=5
     @GetMapping(params = {"page", "size"})
-    public PageImpl<Company> findByPageAndPageSize (@PageableDefault Pageable pageable) {
+    public PageImpl<Company> findByPageAndPageSize(@PageableDefault Pageable pageable) {
         return this.companyRepository.findPagingCompanies(pageable);
     }
 
     // post
     @PostMapping
-    public Company createCompany(@RequestBody Company company){
+    public Company createCompany(@RequestBody Company company) {
         return this.companyRepository.createCompany(company);
     }
 
     // delete
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)  // Code=204
-    public void deleteById(@PathVariable Integer id){
+    public void deleteById(@PathVariable Integer id) {
         this.companyRepository.deleteById(id);
     }
 
     // Put
     @PutMapping("/{id}")
-    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany){
+    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany) {
         Company originCompany = this.companyRepository.findById(id);
-        if (updatedCompany.getBasicInfo() != null){
+        if (updatedCompany.getBasicInfo() != null) {
             originCompany.setBasicInfo(updatedCompany.getBasicInfo());
         }
-        if (updatedCompany.getEmployees()!=null){
+        if (updatedCompany.getEmployees() != null) {
             originCompany.setEmployees(updatedCompany.getEmployees());
         }
         return this.companyRepository.save(id, originCompany);

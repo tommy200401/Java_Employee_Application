@@ -18,7 +18,7 @@ public class CompanyRepository {
 
     List<String> employees = Arrays.asList("John", "Peter", "Mary");
 
-    public List<Company> findAll(){
+    public List<Company> findAll() {
         return companies;
     }
 
@@ -26,31 +26,31 @@ public class CompanyRepository {
         companies.add(new Company(1, "Agile", "StartUp", employees));
     }
 
-    public Company findById(Integer id){
-        return this.companies.stream().filter(item->id.equals(item.getId())).findFirst().orElseThrow(CompanyNotFoundException::new);
+    public Company findById(Integer id) {
+        return this.companies.stream().filter(item -> id.equals(item.getId())).findFirst().orElseThrow(CompanyNotFoundException::new);
     }
 
-    public List<String> findEmployeesById(Integer id){
-        return this.companies.stream().filter(item->id.equals(item.getId())).findFirst().orElseThrow(CompanyNotFoundException::new).getEmployees();
+    public List<String> findEmployeesById(Integer id) {
+        return this.companies.stream().filter(item -> id.equals(item.getId())).findFirst().orElseThrow(CompanyNotFoundException::new).getEmployees();
     }
 
-    public PageImpl<Company> findPagingCompanies (Pageable pageable) {
-        List<Company> page = this.companies.stream().skip((long)pageable.getPageNumber() * pageable.getPageSize()).limit(pageable.getPageSize()).collect(Collectors.toList());
+    public PageImpl<Company> findPagingCompanies(Pageable pageable) {
+        List<Company> page = this.companies.stream().skip((long) pageable.getPageNumber() * pageable.getPageSize()).limit(pageable.getPageSize()).collect(Collectors.toList());
         return new PageImpl<>(page, pageable, this.companies.size());
     }
 
-    public Company createCompany (Company company) {
-        int id = this.companies.stream().mapToInt(Company::getId).max().orElse(0)+1;
+    public Company createCompany(Company company) {
+        int id = this.companies.stream().mapToInt(Company::getId).max().orElse(0) + 1;
         company.setId(id);
         this.companies.add(company);
         return company;
     }
 
-    public void deleteById(Integer id){
+    public void deleteById(Integer id) {
         Company company = this.findById(id);
     }
 
-    public Company save(Integer id, Company updatedCompany){
+    public Company save(Integer id, Company updatedCompany) {
         this.deleteById(id);
         this.companies.add(updatedCompany);
         return updatedCompany;

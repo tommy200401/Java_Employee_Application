@@ -37,31 +37,31 @@ public class EmployeeController {
 
     // /employees?page=1&pageSize=5
     @GetMapping(params = {"page", "size"})
-    public PageImpl<Employee> findByPageAndPageSize (@PageableDefault Pageable pageable) {
+    public PageImpl<Employee> findByPageAndPageSize(@PageableDefault Pageable pageable) {
         return this.employeeRepository.findPagingEmployees(pageable);
     }
 
     // post
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee){
+    public Employee createEmployee(@RequestBody Employee employee) {
         return this.employeeRepository.createEmployee(employee);
     }
 
     // delete
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)  // Code=204
-    public void deleteById(@PathVariable Integer id){
+    public void deleteById(@PathVariable Integer id) {
         this.employeeRepository.deleteById(id);
     }
 
     // Put
     @PutMapping("/{id}")
-    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee){
+    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
         Employee originEmployee = this.employeeRepository.findById(id);
-        if (updatedEmployee.getAge() != null){
+        if (updatedEmployee.getAge() != null) {
             originEmployee.setAge(updatedEmployee.getAge());
         }
-        if (updatedEmployee.getSalary()!=null){
+        if (updatedEmployee.getSalary() != null) {
             originEmployee.setSalary(updatedEmployee.getSalary());
         }
         return this.employeeRepository.save(id, originEmployee);

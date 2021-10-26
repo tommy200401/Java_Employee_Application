@@ -54,16 +54,16 @@ public class CompanyController {
         this.companyRepository.deleteById(id);
     }
 
-//    // Put
-//    @PutMapping("/{id}")
-//    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee){
-//        Employee originEmployee = this.employeeRepository.findById(id);
-//        if (updatedEmployee.getAge() != null){
-//            originEmployee.setAge(updatedEmployee.getAge());
-//        }
-//        if (updatedEmployee.getSalary()!=null){
-//            originEmployee.setSalary(updatedEmployee.getSalary());
-//        }
-//        return this.employeeRepository.save(id, originEmployee);
-//    }
+    // Put
+    @PutMapping("/{id}")
+    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany){
+        Company originCompany = this.companyRepository.findById(id);
+        if (updatedCompany.getBasicInfo() != null){
+            originCompany.setBasicInfo(updatedCompany.getBasicInfo());
+        }
+        if (updatedCompany.getEmployees()!=null){
+            originCompany.setEmployees(updatedCompany.getEmployees());
+        }
+        return this.companyRepository.save(id, originCompany);
+    }
 }

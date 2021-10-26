@@ -49,4 +49,10 @@ public class CompanyRepository {
     public void deleteById(Integer id){
         Company company = this.findById(id);
     }
+
+    public Company save(Integer id, Company updatedCompany){
+        this.deleteById(id);
+        this.companies.add(updatedCompany);
+        return updatedCompany;
+    }
 }

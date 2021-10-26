@@ -47,13 +47,13 @@ public class CompanyController {
         return this.companyRepository.createCompany(company);
     }
 
-//    // delete
-//    @DeleteMapping("/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)  // Code=204
-//    public void deleteById(@PathVariable Integer id){
-//        this.employeeRepository.deleteById(id);
-//    }
-//
+    // delete
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)  // Code=204
+    public void deleteById(@PathVariable Integer id){
+        this.companyRepository.deleteById(id);
+    }
+
 //    // Put
 //    @PutMapping("/{id}")
 //    public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee){

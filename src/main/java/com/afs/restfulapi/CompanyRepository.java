@@ -45,4 +45,8 @@ public class CompanyRepository {
         this.companies.add(company);
         return company;
     }
+
+    public void deleteById(Integer id){
+        Company company = this.findById(id);
+    }
 }

@@ -1,5 +1,8 @@
 package com.afs.restfulapi;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -24,6 +27,11 @@ public class EmployeeRepository {
 
     public List<Employee> findByGender(String gender){
         return this.employees.stream().filter(item->gender.equals(item.getGender())).collect(Collectors.toList());
+    }
+
+    public PageImpl<Employee> findPagingEmployees (Pageable pageable) {
+        List<Employee> page = this.employees.stream().skip((long)pageable.getPageNumber() * pageable.getPageSize()).limit(pageable.getPageSize()).collect(Collectors.toList());
+        return new PageImpl<>(page, pageable, this.employees.size());
     }
 
     public Employee createEmployee (Employee employee) {

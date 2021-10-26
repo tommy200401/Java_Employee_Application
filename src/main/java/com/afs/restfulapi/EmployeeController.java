@@ -1,9 +1,11 @@
 package com.afs.restfulapi;
 
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,7 +35,11 @@ public class EmployeeController {
         return this.employeeRepository.findByGender(gender);
     }
 
-    // todo: 2 parameters
+    // /employees?page=1&pageSize=5
+    @GetMapping(params = {"page", "size"})
+    public PageImpl<Employee> findByPageAndPageSize (@PageableDefault Pageable pageable) {
+        return this.employeeRepository.findPagingEmployees(pageable);
+    }
 
     // post
     @PostMapping

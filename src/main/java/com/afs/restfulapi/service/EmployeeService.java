@@ -49,7 +49,7 @@ public class EmployeeService {
         return repo.createEmployee(employee);
     }
 
-    public Employee deleteEmployee(Integer id){ return null;}
+    public void deleteEmployee(Integer id){ repo.deleteById(id);}
 
     public PageImpl<Employee> findPagingEmployees(Pageable pageable) {
         return repo.findPagingEmployees(pageable);

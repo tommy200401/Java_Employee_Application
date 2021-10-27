@@ -108,8 +108,6 @@ public class EmployeeServiceTest {
         assertEquals(employee1.getSalary(), actual.getSalary());
     }
 
-
-
     @Test
     void should_return_updated_employee_when_edit_employee_given_employee_update_info(){
         //given
@@ -124,5 +122,17 @@ public class EmployeeServiceTest {
         //then
         assertEquals(employeeUpdated, actual);
 
+    }
+
+    @Test
+    void should_delete_employee_when_delete_employee_given_employee_id(){
+        //given
+        Employee employee = new Employee("John", 20, "M", 12345);
+        employeeRepository.createEmployee(employee);
+        employeeRepository.deleteById(1);
+        //when
+        employeeService.deleteEmployee(1);
+        //then
+        assertNull(employeeRepository.findById(1));
     }
 }

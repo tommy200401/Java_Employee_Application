@@ -13,7 +13,7 @@ public class EmployeeRepository {
     private final List<Employee> employees = new ArrayList<>();
 
     public EmployeeRepository() {
-        employees.add(new Employee(1, "Ang", 18, "male", 99999));
+//        employees.add(new Employee( "Ang", 18, "male", 99999));
     }
 
     public List<Employee> findAll() {

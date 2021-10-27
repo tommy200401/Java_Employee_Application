@@ -1,9 +1,11 @@
 package com.afs.restfulapi;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -22,8 +24,13 @@ class EmployeeControllerTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @BeforeEach
+    void setUp(){
+        this.employeeRepository.deleteAll();
+    }
+
     @Test
-    void should_return_all_employees_when_find_all_given_two_employees() throws Exception {
+    void should_return_all_employees_when_get_given_two_employees() throws Exception {
         //given
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
@@ -49,6 +56,28 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$[1].salary").value(12345));
     }
 
+    // todo
+    @Test
+    void should_return_employee_when_get_given_employee_id() throws Exception{
+        //given
+        Employee employee1 = new Employee("Tommy", 20, "M", 123);
+        Employee employee2 = new Employee("John", 25, "M", 12345);
+        employeeRepository.createEmployee(employee1);
+        employeeRepository.createEmployee(employee2);
+
+        //when
+        ResultActions resultActions = mockMvc.perform(get("/employees/2"));
+
+        //then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value("2"))
+                .andExpect(jsonPath("$.name").value("John"))
+                .andExpect(jsonPath("$.age").value(25))
+                .andExpect(jsonPath("$.gender").value("M"))
+                .andExpect(jsonPath("$.salary").value(12345));
+    }
+
     @Test
     void should_return_male_employees_when_find_by_male_employees_given_1_male_employee() throws Exception {
         //given
@@ -67,5 +96,32 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$[0].age").value(20))
                 .andExpect(jsonPath("$[0].gender").value("M"))
                 .andExpect(jsonPath("$[0].salary").value(123));
+    }
+
+    @Test
+    void should_return_created_employee_when_create_employee_given_new_employee_info() throws Exception {
+//        //given
+//        String employee =
+//[
+//        {
+//            "id": null,
+//                "age": 20,
+//                "gender": "M",
+//                "salary": 123,
+//                "name": "Peter"
+//        }
+//]
+//
+//        //when
+//        ResultActions resultActions = mockMvc.perform(post("/employees")).contentType(MediaType.APPLICATION_JSON).content(employee);
+//
+//        //then
+//        resultActions.andExpect(status().isCreated())
+//                .andExpect(jsonPath("$[0].id").value("1"))
+//                .andExpect(jsonPath("$[0].name").value("Peter"))
+//                .andExpect(jsonPath("$[0].age").value(20))
+//                .andExpect(jsonPath("$[0].gender").value("M"))
+//                .andExpect(jsonPath("$[0].salary").value(123));
+//
     }
 }

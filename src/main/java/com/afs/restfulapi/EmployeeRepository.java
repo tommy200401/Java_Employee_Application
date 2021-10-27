@@ -13,7 +13,7 @@ public class EmployeeRepository {
     private final List<Employee> employees = new ArrayList<>();
 
     public EmployeeRepository() {
-//        employees.add(new Employee( "Ang", 18, "male", 99999));
+//        employees.add(new Employee("Peter", 20, "M", 123));
     }
 
     public List<Employee> findAll() {
@@ -49,5 +49,9 @@ public class EmployeeRepository {
         this.deleteById(id);
         this.employees.add(updatedEmployee);
         return updatedEmployee;
+    }
+
+    public void deleteAll() {
+        this.employees.clear();
     }
 }

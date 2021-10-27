@@ -115,17 +115,14 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee("John", 20, "M", 12345);
         employeeRepository.createEmployee(employee);
-        Employee employeeUpdated = new Employee(null, null, null, 99999);
+        Employee employeeUpdated = new Employee("John", 21, "M", 99999);
         when(employeeRepository.updateEmployee(1, employeeUpdated)).thenReturn(employeeUpdated);
 
         //when
-        Employee actual = employeeService.editEmployee(1, employeeUpdated);
+        Employee actual = employeeService.updateEmployee(1, employeeUpdated);
 
         //then
-        assertEquals(99999, actual.getSalary());
-        assertEquals("John", actual.getName());
-        assertEquals(20, actual.getAge());
-        assertEquals("M", actual.getGender());
+        assertEquals(employeeUpdated, actual);
 
     }
 }

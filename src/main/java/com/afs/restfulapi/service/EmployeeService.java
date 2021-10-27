@@ -30,15 +30,19 @@ public class EmployeeService {
         return repo.findByGender(gender);
     }
 
-    public Employee editEmployee(Integer id, Employee updatedEmployee) {
-        Employee originEmployee = repo.findById(id);
-        if (updatedEmployee.getAge() != null) {
-            originEmployee.setAge(updatedEmployee.getAge());
-        }
-        if (updatedEmployee.getSalary() != null) {
-            originEmployee.setSalary(updatedEmployee.getSalary());
-        }
-        return repo.updateEmployee(id, originEmployee);
+//    public Employee editEmployee(Integer id, Employee updatedEmployee) {
+//        Employee originEmployee = repo.findById(id);
+//        if (updatedEmployee.getAge() != null) {
+//            originEmployee.setAge(updatedEmployee.getAge());
+//        }
+//        if (updatedEmployee.getSalary() != null) {
+//            originEmployee.setSalary(updatedEmployee.getSalary());
+//        }
+//        return repo.updateEmployee(id, originEmployee);
+//    }
+
+    public Employee updateEmployee(Integer id, Employee updatedEmployee){
+        return repo.updateEmployee(id, updatedEmployee);
     }
 
     public Employee createEmployee(Employee employee) {

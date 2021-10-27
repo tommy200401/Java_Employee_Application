@@ -109,24 +109,23 @@ public class EmployeeServiceTest {
     }
 
 
-//todo
-//    @Test
-//    void should_return_updated_employee_when_edit_employee_given_employee_update_info(){
-//        //given
-//        Employee employee = new Employee(1, "John", 20, "M", 12345);
-//        when(employeeRepository.findById(1)).thenReturn(employee);
-//        when(employeeRepository.updatedEmployee(any(Employee.class))).then(invocation->invocation.getArgument(0));
-//        Employee updateInfo = new Employee(null, null, null, 99999);
-//
-//        //when
-//        Employee actual = employeeService.editEmployee(1, updateInfo);
-//
-//        //then
-//        assertEquals(99999, actual.getSalary());
-//        assertEquals("John", actual.getName());
-//        assertEquals(20, actual.getAge());
-//        assertEquals("M", actual.getGender());
-//
-//
-//    }
+
+    @Test
+    void should_return_updated_employee_when_edit_employee_given_employee_update_info(){
+        //given
+        Employee employee = new Employee("John", 20, "M", 12345);
+        employeeRepository.createEmployee(employee);
+        Employee employeeUpdated = new Employee(null, null, null, 99999);
+        when(employeeRepository.updateEmployee(1, employeeUpdated)).thenReturn(employeeUpdated);
+
+        //when
+        Employee actual = employeeService.editEmployee(1, employeeUpdated);
+
+        //then
+        assertEquals(99999, actual.getSalary());
+        assertEquals("John", actual.getName());
+        assertEquals(20, actual.getAge());
+        assertEquals("M", actual.getGender());
+
+    }
 }

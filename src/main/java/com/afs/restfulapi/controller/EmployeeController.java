@@ -23,6 +23,8 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    //Todo: change all employeeRepository to employeeService upon update
+
     @GetMapping
     public List<Employee> findAllEmployees() {
         return this.employeeRepository.findAll();

@@ -48,6 +48,6 @@ public class EmployeeService {
     public Employee deleteEmployee(Integer id){ return null;}
 
     public PageImpl<Employee> findPagingEmployees(Pageable pageable) {
-        return null;
+        return repo.findPagingEmployees(pageable);
     }
 }

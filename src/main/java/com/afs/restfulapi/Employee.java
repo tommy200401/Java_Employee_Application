@@ -5,6 +5,7 @@ public class Employee {
         this.id = id;
     }
 
+    //todo: delete ID
     public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
         this.id = id;
         this.age = age;

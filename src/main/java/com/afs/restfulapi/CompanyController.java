@@ -43,6 +43,7 @@ public class CompanyController {
 
     // post
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)  // Code=201
     public Company createCompany(@RequestBody Company company) {
         return this.companyRepository.createCompany(company);
     }

@@ -43,6 +43,7 @@ public class EmployeeController {
 
     // post
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)  // Code=201
     public Employee createEmployee(@RequestBody Employee employee) {
         return this.employeeRepository.createEmployee(employee);
     }

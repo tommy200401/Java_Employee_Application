@@ -8,6 +8,7 @@ public class Company {
     private String basicInfo;
     private List<String> employees;
 
+    //todo: delete ID
     public Company(int id, String companyName, String basicInfo, List<String> employees) {
         this.id = id;
         this.companyName = companyName;
@@ -18,7 +19,6 @@ public class Company {
     public int getId() {
         return id;
     }
-
 
     public String getBasicInfo() {
         return basicInfo;
@@ -31,7 +31,6 @@ public class Company {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public void setBasicInfo(String basicInfo) {
         this.basicInfo = basicInfo;

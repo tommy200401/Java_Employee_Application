@@ -1,5 +1,7 @@
-package com.afs.restfulapi;
+package com.afs.restfulapi.controller;
 
+import com.afs.restfulapi.entity.Company;
+import com.afs.restfulapi.repository.CompanyRepository;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

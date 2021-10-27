@@ -1,4 +1,4 @@
-package com.afs.restfulapi;
+package com.afs.restfulapi.entity;
 
 public class Employee {
 

@@ -1,5 +1,7 @@
-package com.afs.restfulapi;
+package com.afs.restfulapi.repository;
 
+import com.afs.restfulapi.entity.Employee;
+import com.afs.restfulapi.exception.EmployeeNotFoundException;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,6 @@ public class EmployeeRepository {
     private final List<Employee> employees = new ArrayList<>();
 
     public EmployeeRepository() {
-//        employees.add(new Employee("Peter", 20, "M", 123));
     }
 
     public List<Employee> findAll() {
@@ -44,8 +45,8 @@ public class EmployeeRepository {
         Employee employee = this.findById(id);
     }
 
-    //todo: change name to update
-    public Employee save(Integer id, Employee updatedEmployee) {
+
+    public Employee updateEmployee(Integer id, Employee updatedEmployee) {
         this.deleteById(id);
         this.employees.add(updatedEmployee);
         return updatedEmployee;

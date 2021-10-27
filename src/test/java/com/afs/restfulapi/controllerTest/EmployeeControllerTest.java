@@ -1,15 +1,15 @@
-package com.afs.restfulapi;
+package com.afs.restfulapi.controllerTest;
 
+import com.afs.restfulapi.entity.Employee;
+import com.afs.restfulapi.repository.EmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -58,7 +58,7 @@ class EmployeeControllerTest {
 
     // todo
     @Test
-    void should_return_employee_when_get_given_employee_id() throws Exception{
+    void should_return_correct_employee_when_get_given_employee_id() throws Exception{
         //given
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
@@ -98,8 +98,8 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$[0].salary").value(123));
     }
 
-    @Test
-    void should_return_created_employee_when_create_employee_given_new_employee_info() throws Exception {
+//    @Test
+//    void should_return_created_employee_when_create_employee_given_new_employee_info() throws Exception {
 //        //given
 //        String employee =
 //[
@@ -123,5 +123,5 @@ class EmployeeControllerTest {
 //                .andExpect(jsonPath("$[0].gender").value("M"))
 //                .andExpect(jsonPath("$[0].salary").value(123));
 //
-    }
+//    }
 }

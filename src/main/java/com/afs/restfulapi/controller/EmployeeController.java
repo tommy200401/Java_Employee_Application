@@ -1,5 +1,8 @@
-package com.afs.restfulapi;
+package com.afs.restfulapi.controller;
 
+import com.afs.restfulapi.entity.Employee;
+import com.afs.restfulapi.repository.EmployeeRepository;
+import com.afs.restfulapi.service.EmployeeService;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -67,6 +70,6 @@ public class EmployeeController {
         if (updatedEmployee.getSalary() != null) {
             originEmployee.setSalary(updatedEmployee.getSalary());
         }
-        return this.employeeRepository.save(id, originEmployee);
+        return this.employeeRepository.updateEmployee(id, originEmployee);
     }
 }

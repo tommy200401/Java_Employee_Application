@@ -1,4 +1,4 @@
-package com.afs.restfulapi;
+package com.afs.restfulapi.exception;
 
 public class CompanyNotFoundException extends RuntimeException {
     public CompanyNotFoundException() {

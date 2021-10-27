@@ -61,7 +61,6 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$[1].salary").value(12345));
     }
 
-    // todo
     @Test
     void should_return_correct_employee_when_get_given_employee_id() throws Exception{
         //given

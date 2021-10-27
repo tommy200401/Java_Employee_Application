@@ -52,7 +52,7 @@ class EmployeeControllerTest {
     @Test
     void should_return_male_employees_when_find_by_male_employees_given_1_male_employee() throws Exception {
         //given
-        Employee employee1 = new Employee("Tommy", 20, "M", 123);
+        Employee employee1 = new Employee("Peter", 20, "M", 123);
         Employee employee2 = new Employee("Jeany", 25, "F", 12345);
         employeeRepository.createEmployee(employee1);
         employeeRepository.createEmployee(employee2);
@@ -63,7 +63,7 @@ class EmployeeControllerTest {
         //then
         resultActions.andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value("1"))
-                .andExpect(jsonPath("$[0].name").value("Tommy"))
+                .andExpect(jsonPath("$[0].name").value("Peter"))
                 .andExpect(jsonPath("$[0].age").value(20))
                 .andExpect(jsonPath("$[0].gender").value("M"))
                 .andExpect(jsonPath("$[0].salary").value(123));

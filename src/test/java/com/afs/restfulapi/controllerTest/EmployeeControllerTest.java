@@ -22,11 +22,11 @@ class EmployeeControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeRepository repo;
 
     @BeforeEach
     void setUp(){
-        this.employeeRepository.deleteAll();
+        repo.deleteAll();
     }
 
     @Test
@@ -34,8 +34,8 @@ class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
-        employeeRepository.createEmployee(employee1);
-        employeeRepository.createEmployee(employee2);
+        repo.createEmployee(employee1);
+        repo.createEmployee(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees"));
@@ -62,8 +62,8 @@ class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
-        employeeRepository.createEmployee(employee1);
-        employeeRepository.createEmployee(employee2);
+        repo.createEmployee(employee1);
+        repo.createEmployee(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees/2"));
@@ -83,8 +83,8 @@ class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee("Peter", 20, "M", 123);
         Employee employee2 = new Employee("Jeany", 25, "F", 12345);
-        employeeRepository.createEmployee(employee1);
-        employeeRepository.createEmployee(employee2);
+        repo.createEmployee(employee1);
+        repo.createEmployee(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees?gender=M"));
@@ -97,6 +97,31 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$[0].gender").value("M"))
                 .andExpect(jsonPath("$[0].salary").value(123));
     }
+
+    @Test
+    void should_return_paged_employees_when_get_employees_when_get_page_given_page_and_page_size() throws Exception {
+        //given
+        Employee employee1 = new Employee("Peter", 20, "M", 123);
+        Employee employee2 = new Employee("Jeany", 25, "F", 12345);
+        Employee employee3 = new Employee("Tommy", 25, "M", 123456);
+        repo.createEmployee(employee1);
+        repo.createEmployee(employee2);
+        repo.createEmployee(employee3);
+
+        //when
+        ResultActions resultActions = mockMvc.perform(get("employees?page=1&pageSize=2"));
+
+        //then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(employee3.getId()))
+                .andExpect(jsonPath("$[0].name").value(employee3.getName()))
+                .andExpect(jsonPath("$[0].age").value(employee3.getAge()))
+                .andExpect(jsonPath("$[0].gender").value(employee3.getGender()))
+                .andExpect(jsonPath("$[0].salary").value(employee3.getSalary()))
+                .andExpect(jsonPath("$[1]").doesNotExist());
+    }
+
 
 //    @Test
 //    void should_return_created_employee_when_create_employee_given_new_employee_info() throws Exception {

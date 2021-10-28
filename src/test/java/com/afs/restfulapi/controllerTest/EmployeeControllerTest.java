@@ -2,7 +2,6 @@ package com.afs.restfulapi.controllerTest;
 
 import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.repository.EmployeeRepository;
-import com.afs.restfulapi.repository.NewEmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,14 +24,14 @@ class EmployeeControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private NewEmployeeRepository newEmployeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     ObjectMapper jsonMapper;
 
     @BeforeEach
     void setUp(){
-        newEmployeeRepository.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     @Test
@@ -41,8 +40,8 @@ class EmployeeControllerTest {
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
         //todo: change to save
-        newEmployeeRepository.save(employee1);
-        newEmployeeRepository.save(employee2);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees"));
@@ -69,8 +68,8 @@ class EmployeeControllerTest {
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
         //todo: change to save
-        newEmployeeRepository.save(employee1);
-        newEmployeeRepository.save(employee2);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees/2"));
@@ -91,8 +90,8 @@ class EmployeeControllerTest {
         Employee employee1 = new Employee("Peter", 20, "M", 123);
         Employee employee2 = new Employee("Jeany", 25, "F", 12345);
         //todo: change to save
-        newEmployeeRepository.save(employee1);
-        newEmployeeRepository.save(employee2);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees?gender=M"));
@@ -113,9 +112,9 @@ class EmployeeControllerTest {
         Employee employee2 = new Employee("Jeany", 25, "F", 12345);
         Employee employee3 = new Employee("Tommy", 25, "M", 123456);
         //todo: change to save
-        newEmployeeRepository.save(employee1);
-        newEmployeeRepository.save(employee2);
-        newEmployeeRepository.save(employee3);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        employeeRepository.save(employee3);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("employees?page=1&pageSize=2"));
@@ -155,7 +154,7 @@ class EmployeeControllerTest {
     @Test
     void should_update_employee_when_put_given_an_updated_employee() throws Exception {
         Employee employee = new Employee("Peter", 20, "M", 123);
-        Employee updated = newEmployeeRepository.save(employee);
+        Employee updated = employeeRepository.save(employee);
         updated.setAge(33);
         updated.setSalary(12345);
         String url = String.format("/employees/%d", updated.getId());
@@ -179,12 +178,12 @@ class EmployeeControllerTest {
     @Test
     void should_delete_employee_when_given_an_employee_id() throws Exception {
         Employee employee = new Employee("Peter", 20, "M", 123);
-        Employee saved = newEmployeeRepository.save(employee);
+        Employee saved = employeeRepository.save(employee);
         String url = String.format("/employees/%d", saved.getId());
 
-        assertEquals(1, newEmployeeRepository.findAll().size());
+        assertEquals(1, employeeRepository.findAll().size());
         ResultActions result = mockMvc.perform(delete(url));
-        assertEquals(0, newEmployeeRepository.findAll().size());
+        assertEquals(0, employeeRepository.findAll().size());
 
         result
                 .andExpect(status().isNoContent())

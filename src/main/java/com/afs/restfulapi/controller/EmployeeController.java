@@ -1,8 +1,6 @@
 package com.afs.restfulapi.controller;
 
 import com.afs.restfulapi.entity.Employee;
-import com.afs.restfulapi.repository.EmployeeRepository;
-import com.afs.restfulapi.repository.NewEmployeeRepository;
 import com.afs.restfulapi.service.EmployeeService;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

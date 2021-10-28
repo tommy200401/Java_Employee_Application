@@ -32,10 +32,10 @@ public class CompanyController {
     }
 
     // /companies/{id}/employees
-    @GetMapping("/{id}/employees")
-    public List<String> findEmployeesById(@PathVariable Integer id) {
-        return this.companyRepository.findEmployeesById(id);
-    }
+//    @GetMapping("/{id}/employees")
+//    public List<String> findEmployeesById(@PathVariable Integer id) {
+//        return this.companyRepository.findEmployeesById(id);
+//    }
 
     // /companies?page=1&pageSize=5
     @GetMapping(params = {"page", "size"})
@@ -58,15 +58,15 @@ public class CompanyController {
     }
 
     // Put
-    @PutMapping("/{id}")
-    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany) {
-        Company originCompany = this.companyRepository.findById(id);
-        if (updatedCompany.getBasicInfo() != null) {
-            originCompany.setBasicInfo(updatedCompany.getBasicInfo());
-        }
-        if (updatedCompany.getEmployees() != null) {
-            originCompany.setEmployees(updatedCompany.getEmployees());
-        }
-        return this.companyRepository.save(id, originCompany);
-    }
+//    @PutMapping("/{id}")
+//    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany) {
+//        Company originCompany = this.companyRepository.findById(id);
+//        if (updatedCompany.getBasicInfo() != null) {
+//            originCompany.setBasicInfo(updatedCompany.getBasicInfo());
+//        }
+//        if (updatedCompany.getEmployees() != null) {
+//            originCompany.setEmployees(updatedCompany.getEmployees());
+//        }
+//        return this.companyRepository.save(id, originCompany);
+//    }
 }

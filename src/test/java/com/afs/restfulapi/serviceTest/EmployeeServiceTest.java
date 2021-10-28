@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,7 +81,7 @@ public class EmployeeServiceTest {
                 new Employee("John", 20, "M", 12345),
                 new Employee("Peter", 25, "M", 123456));
         Pageable pageable = PageRequest.of(0, 2);
-        PageImpl<Employee> content = new PageImpl<Employee>(employees, pageable, employees.size());
+        PageImpl<Employee> content = new PageImpl<>(employees, pageable, employees.size());
         when(mockEmployeeRepository.findPagingEmployees(pageable)).thenReturn(content);
         //when
         PageImpl<Employee> actual = employeeService.findPagingEmployees(pageable);

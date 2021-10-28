@@ -43,7 +43,7 @@ public class EmployeeController {
     }
 
     // /employees?page=1&pageSize=5
-    @GetMapping(params = {"page", "size"})
+    @GetMapping(params = {"page", "pageSize"})
     public PageImpl<Employee> findByPageAndPageSize(@PageableDefault Pageable pageable) {
         return this.employeeRepository.findPagingEmployees(pageable);
     }

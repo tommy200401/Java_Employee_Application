@@ -4,12 +4,13 @@ import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.repository.EmployeeRepository;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static org.testng.AssertJUnit.assertEquals;
 
-//@Service
+@Service
 public class EmployeeService {
 
     private final EmployeeRepository repo;
@@ -38,7 +39,7 @@ public class EmployeeService {
 //        if (updatedEmployee.getSalary() != null) {
 //            originEmployee.setSalary(updatedEmployee.getSalary());
 //        }
-//        return repo.updateEmployee(id, originEmployee);
+//        return repo.updateEmployee(originEmployee);
 //    }
 
     public Employee updateEmployee(Integer id, Employee updatedEmployee){

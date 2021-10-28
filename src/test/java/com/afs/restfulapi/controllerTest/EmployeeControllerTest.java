@@ -24,14 +24,14 @@ class EmployeeControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private EmployeeRepository repo;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     ObjectMapper jsonMapper;
 
     @BeforeEach
     void setUp(){
-        repo.deleteAll();
+        employeeRepository.deleteAll();
     }
 
     @Test
@@ -39,8 +39,8 @@ class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
-        repo.createEmployee(employee1);
-        repo.createEmployee(employee2);
+        employeeRepository.createEmployee(employee1);
+        employeeRepository.createEmployee(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees"));
@@ -66,8 +66,8 @@ class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
-        repo.createEmployee(employee1);
-        repo.createEmployee(employee2);
+        employeeRepository.createEmployee(employee1);
+        employeeRepository.createEmployee(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees/2"));
@@ -87,8 +87,8 @@ class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee("Peter", 20, "M", 123);
         Employee employee2 = new Employee("Jeany", 25, "F", 12345);
-        repo.createEmployee(employee1);
-        repo.createEmployee(employee2);
+        employeeRepository.createEmployee(employee1);
+        employeeRepository.createEmployee(employee2);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("/employees?gender=M"));
@@ -108,9 +108,9 @@ class EmployeeControllerTest {
         Employee employee1 = new Employee("Peter", 20, "M", 123);
         Employee employee2 = new Employee("Jeany", 25, "F", 12345);
         Employee employee3 = new Employee("Tommy", 25, "M", 123456);
-        repo.createEmployee(employee1);
-        repo.createEmployee(employee2);
-        repo.createEmployee(employee3);
+        employeeRepository.createEmployee(employee1);
+        employeeRepository.createEmployee(employee2);
+        employeeRepository.createEmployee(employee3);
 
         //when
         ResultActions resultActions = mockMvc.perform(get("employees?page=1&pageSize=2"));
@@ -150,7 +150,7 @@ class EmployeeControllerTest {
     @Test
     void should_update_employee_when_put_given_an_updated_employee() throws Exception {
         Employee employee = new Employee("Peter", 20, "M", 123);
-        Employee updated = repo.createEmployee(employee);
+        Employee updated = employeeRepository.createEmployee(employee);
         updated.setAge(33);
         updated.setSalary(12345);
         String url = String.format("/employees/%d", updated.getId());
@@ -174,12 +174,12 @@ class EmployeeControllerTest {
     @Test
     void should_delete_employee_when_given_an_employee_id() throws Exception {
         Employee employee = new Employee("Peter", 20, "M", 123);
-        Employee saved = repo.createEmployee(employee);
+        Employee saved = employeeRepository.createEmployee(employee);
         String url = String.format("/employees/%d", saved.getId());
 
-        assertEquals(1, repo.findAll().size());
+        assertEquals(1, employeeRepository.findAll().size());
         ResultActions result = mockMvc.perform(delete(url));
-        assertEquals(0, repo.findAll().size());
+        assertEquals(0, employeeRepository.findAll().size());
 
         result
                 .andExpect(status().isNoContent())

@@ -1,7 +1,9 @@
 package com.afs.restfulapi.service;
 
 import com.afs.restfulapi.entity.Employee;
+import com.afs.restfulapi.exception.EmployeeNotFoundException;
 import com.afs.restfulapi.repository.EmployeeRepository;
+import com.afs.restfulapi.repository.NewEmployeeRepository;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -13,46 +15,49 @@ import static org.testng.AssertJUnit.assertEquals;
 @Service
 public class EmployeeService {
 
-    private final EmployeeRepository repo;
+    private NewEmployeeRepository newEmployeeRepository;
 
-    public EmployeeService(EmployeeRepository repo) {
-        this.repo = repo;
+    public EmployeeService(NewEmployeeRepository newEmployeeRepository) {
+        this.newEmployeeRepository = newEmployeeRepository;
     }
 
     public List<Employee> findAll() {
-        return repo.findAll();
+        return this.newEmployeeRepository.findAll();
     }
 
     public Employee findById(Integer id) {
-        return repo.findById(id);
+        return this.newEmployeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
+    }
+
+    public PageImpl<Employee> findPagingEmployees(Pageable pageable) {
+        return (PageImpl<Employee>) this.newEmployeeRepository.findAll(pageable);
     }
 
     public List<Employee> findByGender(String gender) {
-        return repo.findByGender(gender);
+        return newEmployeeRepository.findAllByGender(gender);
     }
-
-//    public Employee editEmployee(Integer id, Employee updatedEmployee) {
-//        Employee originEmployee = repo.findById(id);
-//        if (updatedEmployee.getAge() != null) {
-//            originEmployee.setAge(updatedEmployee.getAge());
-//        }
-//        if (updatedEmployee.getSalary() != null) {
-//            originEmployee.setSalary(updatedEmployee.getSalary());
-//        }
-//        return repo.updateEmployee(originEmployee);
+//
+//    public Employee updateEmployee(Integer id, Employee updatedEmployee){
+//        return this.newEmployeeRepository.save(id, updatedEmployee);
 //    }
 
-    public Employee updateEmployee(Integer id, Employee updatedEmployee){
-        return repo.updateEmployee(id, updatedEmployee);
+    public Employee editEmployee(Integer id, Employee updatedEmployee) {
+        Employee originEmployee = newEmployeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
+        if (updatedEmployee.getAge() != null) {
+            originEmployee.setAge(updatedEmployee.getAge());
+        }
+        if (updatedEmployee.getSalary() != null) {
+            originEmployee.setSalary(updatedEmployee.getSalary());
+        }
+        return this.newEmployeeRepository.save(originEmployee);
     }
 
     public Employee createEmployee(Employee employee) {
-        return repo.createEmployee(employee);
+        return this.newEmployeeRepository.save(employee);
     }
 
-    public void deleteEmployee(Integer id){ repo.deleteById(id);}
-
-    public PageImpl<Employee> findPagingEmployees(Pageable pageable) {
-        return repo.findPagingEmployees(pageable);
-    }
+    public void deleteEmployee(Integer id){
+        // Create new employee first, in case non-exist ID, findById will return exception
+        Employee employee = this.findById(id);
+        this.newEmployeeRepository.delete(employee);}
 }

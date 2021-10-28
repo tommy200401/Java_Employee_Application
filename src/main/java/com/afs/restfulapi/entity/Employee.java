@@ -1,14 +1,24 @@
 package com.afs.restfulapi.entity;
 
-public class Employee {
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer age;
     private String gender;
     private Integer salary;
     private String name;
+    private int companyId;
 
-    //todo: delete ID
+    public Employee(){}
+
     public Employee(String name, Integer age, String gender, Integer salary) {
         this.name = name;
         this.age = age;
@@ -62,5 +72,13 @@ public class Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 }

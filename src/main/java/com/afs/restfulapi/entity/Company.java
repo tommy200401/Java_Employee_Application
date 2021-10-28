@@ -1,13 +1,18 @@
 package com.afs.restfulapi.entity;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Company {
-    private int id;
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Integer id;
     private String companyName;
     private String basicInfo;
     private List<String> employees;
 
+    //todo: update <String> to <employee>
     //todo: delete ID
     public Company(int id, String companyName, String basicInfo, List<String> employees) {
         this.id = id;

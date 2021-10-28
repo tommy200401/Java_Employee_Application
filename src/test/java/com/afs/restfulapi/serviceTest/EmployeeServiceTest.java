@@ -1,7 +1,9 @@
 package com.afs.restfulapi.serviceTest;
 
 import com.afs.restfulapi.entity.Employee;
+import com.afs.restfulapi.exception.EmployeeNotFoundException;
 import com.afs.restfulapi.repository.EmployeeRepository;
+import com.afs.restfulapi.repository.NewEmployeeRepository;
 import com.afs.restfulapi.service.EmployeeService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,10 +26,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EmployeeServiceTest {
 
     @Mock
-    private EmployeeRepository mockEmployeeRepository;
+    NewEmployeeRepository newEmployeeRepository;
 
     @InjectMocks
-    private EmployeeService employeeService;
+    EmployeeService employeeService;
 
     @Test
     void should_return_all_employees_when_find_all_given_2_employees(){
@@ -34,7 +37,7 @@ public class EmployeeServiceTest {
         List<Employee> employees = Arrays.asList(
                 new Employee(1, "John", 20, "M", 12345),
                 new Employee(2, "Peter", 25, "M", 123456));
-        when(mockEmployeeRepository.findAll()).thenReturn(employees);
+        when(newEmployeeRepository.findAll()).thenReturn(employees);
 
         //when
         List<Employee> actual = employeeService.findAll();
@@ -46,8 +49,8 @@ public class EmployeeServiceTest {
     @Test
     void should_return_an_employee_when_find_by_id_given_id(){
         //given
-        Employee employee = new Employee(1, "John", 20, "M", 12345);
-        when(mockEmployeeRepository.findById(1)).thenReturn(employee);
+        Employee employee = new Employee("John", 20, "M", 12345);
+        when(newEmployeeRepository.findById(1)).thenReturn(java.util.Optional.of(employee));
 
         //when
         Employee actual = employeeService.findById(1);
@@ -60,11 +63,11 @@ public class EmployeeServiceTest {
     void should_return_employees_of_same_gender_when_find_by_gender_given_gender() {
         //given
         List<Employee> employees = Arrays.asList(
-                new Employee(1, "John", 20, "M", 12345),
-                new Employee(2, "Peter", 25, "M", 123456),
-                new Employee(3, "Mary", 30, "F", 1234567));
+                new Employee("John", 20, "M", 12345),
+                new Employee("Peter", 25, "M", 123456),
+                new Employee("Mary", 30, "F", 1234567));
         List<Employee> expectedEmployees = employees.stream().filter(e -> e.getGender().equals("M")).collect(Collectors.toList());
-        when(mockEmployeeRepository.findByGender("M")).thenReturn(expectedEmployees);
+        when(newEmployeeRepository.findAllByGender("M")).thenReturn(expectedEmployees);
 
         //when
         List<Employee> actual = employeeService.findByGender("M");
@@ -82,7 +85,7 @@ public class EmployeeServiceTest {
                 new Employee("Peter", 25, "M", 123456));
         Pageable pageable = PageRequest.of(0, 2);
         PageImpl<Employee> content = new PageImpl<>(employees, pageable, employees.size());
-        when(mockEmployeeRepository.findPagingEmployees(pageable)).thenReturn(content);
+        when(newEmployeeRepository.findAll(pageable)).thenReturn(content);
         //when
         PageImpl<Employee> actual = employeeService.findPagingEmployees(pageable);
         //then
@@ -94,7 +97,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee1 = new Employee("John", 20, "M", 12345);
         Employee employee2 = new Employee(2,"John", 20, "M", 12345);
-        when(mockEmployeeRepository.createEmployee(employee1)).thenReturn(employee2);
+        when(newEmployeeRepository.save(employee1)).thenReturn(employee2);
 
         //when
         Employee actual = employeeService.createEmployee(employee1);
@@ -111,27 +114,28 @@ public class EmployeeServiceTest {
     void should_return_updated_employee_when_edit_employee_given_employee_update_info(){
         //given
         Employee employee = new Employee("John", 20, "M", 12345);
-        mockEmployeeRepository.createEmployee(employee);
+        newEmployeeRepository.save(employee);
         Employee employeeUpdated = new Employee("John", 21, "M", 99999);
-        when(mockEmployeeRepository.updateEmployee(1, employeeUpdated)).thenReturn(employeeUpdated);
+        when(newEmployeeRepository.save(employeeUpdated)).thenReturn(employeeUpdated);
 
         //when
-        Employee actual = employeeService.updateEmployee(1, employeeUpdated);
+        Employee actual = newEmployeeRepository.save(employeeUpdated);
 
         //then
         assertEquals(employeeUpdated, actual);
 
     }
 
-    @Test
-    void should_delete_employee_when_delete_employee_given_employee_id(){
-        //given
-        Employee employee = new Employee("John", 20, "M", 12345);
-        mockEmployeeRepository.createEmployee(employee);
-        mockEmployeeRepository.deleteById(1);
-        //when
-        employeeService.deleteEmployee(1);
-        //then
-        assertNull(mockEmployeeRepository.findById(1));
-    }
+    //todo: assertException
+//    @Test
+//    void should_delete_employee_when_delete_employee_given_employee_id(){
+//        //given
+//        Employee employee = new Employee("John", 20, "M", 12345);
+//        newEmployeeRepository.save(employee);
+//        newEmployeeRepository.delete(employee);
+//        //when
+//        employeeService.deleteEmployee(1);
+//        //then
+//        assertThrows(newEmployeeRepository.findById(1));
+//    }
 }

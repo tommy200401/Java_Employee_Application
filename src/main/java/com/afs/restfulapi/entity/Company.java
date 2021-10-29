@@ -6,10 +6,13 @@ import java.util.List;
 
 @Entity
 public class Company {
+
+    //Todo: renamed companyId -> id, etc.
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer companyId;
     private String companyName;
+    @OneToMany(mappedBy = "companyId")
     private List<Employee> employees;
 
     public Company(){}

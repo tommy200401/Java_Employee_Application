@@ -1,4 +1,4 @@
-package com.afs.restfulapi.serviceTest;
+package com.afs.restfulapi.service;
 
 import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.repository.EmployeeRepository;

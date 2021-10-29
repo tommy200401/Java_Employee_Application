@@ -1,4 +1,4 @@
-package com.afs.restfulapi.controllerTest;
+package com.afs.restfulapi.controller;
 
 import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.repository.EmployeeRepository;

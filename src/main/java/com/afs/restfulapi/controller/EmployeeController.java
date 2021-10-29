@@ -1,6 +1,8 @@
 package com.afs.restfulapi.controller;
 
+import com.afs.restfulapi.dto.EmployeeRequest;
 import com.afs.restfulapi.entity.Employee;
+import com.afs.restfulapi.mapper.EmployeeMapper;
 import com.afs.restfulapi.service.EmployeeService;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,7 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private EmployeeMapper employeeMapper;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -48,8 +51,8 @@ public class EmployeeController {
     // post
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)  // Code=201
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return this.employeeService.createEmployee(employee);
+    public Employee createEmployee(@RequestBody EmployeeRequest employeeRequest) {
+        return this.employeeService.createEmployee(employeeMapper.toEntity(employeeRequest));
     }
 
     // delete
@@ -59,6 +62,8 @@ public class EmployeeController {
         this.employeeService.deleteEmployee(id);
     }
 
+    //todo: change to update, not edit
+    //todo: delete logic
     // Put
     @PutMapping("/{id}")
     public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {

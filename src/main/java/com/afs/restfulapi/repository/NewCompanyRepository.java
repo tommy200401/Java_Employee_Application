@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface NewCompanyRepository extends JpaRepository<Company, Integer> {
 
-    List<Employee> findAllByCompanyId(Integer id);
+
 }

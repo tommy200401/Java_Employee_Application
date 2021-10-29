@@ -1,47 +1,44 @@
 package com.afs.restfulapi.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Company {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Integer id;
+    private Integer companyId;
     private String companyName;
-    private String basicInfo;
-//    private List<String> employees;
+    private List<Employee> employees;
 
-    //todo: update <String> to <employee>
-    //todo: delete ID
-    public Company(int id, String companyName, String basicInfo, List<String> employees) {
-        this.id = id;
+    public Company(int companyId, String companyName) {
+        this.companyId = companyId;
         this.companyName = companyName;
-        this.basicInfo = basicInfo;
-//        this.employees = employees;
+        this.employees = new ArrayList<>();
+    }
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public int getId() {
-        return id;
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
-    public String getBasicInfo() {
-        return basicInfo;
+    public String getCompanyName() {
+        return companyName;
     }
 
-//    public List<String> getEmployees() {
-//        return employees;
-//    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public void setBasicInfo(String basicInfo) {
-        this.basicInfo = basicInfo;
+    public List<Employee> getEmployees() {
+        return employees;
     }
-//
-//    public void setEmployees(List<String> employees) {
-//        this.employees = employees;
-//    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
 }

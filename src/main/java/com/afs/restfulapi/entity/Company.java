@@ -12,8 +12,15 @@ public class Company {
     private String companyName;
     private List<Employee> employees;
 
+    public Company(){}
+
     public Company(int companyId, String companyName) {
         this.companyId = companyId;
+        this.companyName = companyName;
+        this.employees = new ArrayList<>();
+    }
+
+    public Company(String companyName) {
         this.companyName = companyName;
         this.employees = new ArrayList<>();
     }

@@ -1,6 +1,7 @@
 package com.afs.restfulapi.controller;
 
 import com.afs.restfulapi.entity.Company;
+import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.repository.CompanyRepository;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -31,11 +32,11 @@ public class CompanyController {
         return this.companyRepository.findById(id);
     }
 
-    // /companies/{id}/employees
-//    @GetMapping("/{id}/employees")
-//    public List<String> findEmployeesById(@PathVariable Integer id) {
-//        return this.companyRepository.findEmployeesById(id);
-//    }
+     //companies/{id}/employees
+    @GetMapping("/{id}/employees")
+    public List<Employee> findEmployeesById(@PathVariable Integer id) {
+        return this.companyRepository.findEmployeesById(id);
+    }
 
     // /companies?page=1&pageSize=5
     @GetMapping(params = {"page", "size"})

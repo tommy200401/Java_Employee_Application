@@ -35,10 +35,6 @@ public class EmployeeService {
     public List<Employee> findByGender(String gender) {
         return employeeRepository.findAllByGender(gender);
     }
-//
-//    public Employee updateEmployee(Integer id, Employee updatedEmployee){
-//        return this.newEmployeeRepository.save(id, updatedEmployee);
-//    }
 
     public Employee editEmployee(Integer id, Employee updatedEmployee) {
         Employee originEmployee = employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);

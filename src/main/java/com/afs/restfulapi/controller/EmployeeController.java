@@ -1,16 +1,18 @@
 package com.afs.restfulapi.controller;
 
 import com.afs.restfulapi.dto.EmployeeRequest;
+import com.afs.restfulapi.dto.EmployeeResponse;
 import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.mapper.EmployeeMapper;
 import com.afs.restfulapi.service.EmployeeService;
-import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
@@ -19,33 +21,37 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private EmployeeMapper employeeMapper;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeService employeeService, EmployeeMapper employeeMapper) {
         this.employeeService = employeeService;
+        this.employeeMapper = employeeMapper;
     }
 
     //Todo: change all employeeRepository to employeeService upon update
 
     @GetMapping
-    public List<Employee> findAllEmployees() {
-        return this.employeeService.findAll();
+    public List<EmployeeResponse> findAllEmployees() {
+
+        return this.employeeService.findAll().stream().map(employee->employeeMapper.toResponse(employee)).collect(Collectors.toList());
     }
 
     // /employees/{id}
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable Integer id) {
-        return this.employeeService.findById(id);
+    public EmployeeResponse findById(@PathVariable Integer id) {
+
+        return this.employeeMapper.toResponse(employeeService.findById(id));
     }
 
+//todo: change all to mappers/response
     // /employees?gender=male
     @GetMapping(params = "gender")
-    public List<Employee> findByGender(@RequestParam String gender) {
-        return this.employeeService.findByGender(gender);
+    public List<EmployeeResponse> findByGender(@RequestParam String gender) {
+        return this.employeeService.findByGender(gender).stream().map(employee->employeeMapper.toResponse(employee)).collect(Collectors.toList());
     }
 
     // /employees?page=1&pageSize=5
     @GetMapping(params = {"page", "pageSize"})
-    public PageImpl<Employee> findByPageAndPageSize(@PageableDefault Pageable pageable) {
-        return this.employeeService.findPagingEmployees(pageable);
+    public Page<EmployeeResponse> findByPageAndPageSize(@PageableDefault Pageable pageable) {
+        return employeeService.findPagingEmployees(pageable).map(employee->employeeMapper.toResponse(employee));
     }
 
     // post

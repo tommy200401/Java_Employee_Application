@@ -1,8 +1,10 @@
 package com.afs.restfulapi.service;
 
 import com.afs.restfulapi.entity.Employee;
+import com.afs.restfulapi.exception.EmployeeNotFoundException;
 import com.afs.restfulapi.repository.EmployeeRepository;
 import com.afs.restfulapi.service.EmployeeService;
+import com.sun.istack.localization.LocalizableMessageFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,8 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
@@ -123,16 +126,26 @@ public class EmployeeServiceTest {
 
     }
 
-    //todo: assertException
-//    @Test
-//    void should_delete_employee_when_delete_employee_given_employee_id(){
+
+    @Test
+    void should_delete_employee_when_delete_employee_given_employee_id(){
 //        //given
 //        Employee employee = new Employee("John", 20, "M", 12345);
-//        newEmployeeRepository.save(employee);
-//        newEmployeeRepository.delete(employee);
+//        when(employeeRepository.save(employee)).thenReturn(employee);
+//        when(employeeRepository.deleteById(1)).thenReturn()
+//
 //        //when
-//        employeeService.deleteEmployee(1);
+//        String actualMessage = employeeNotFoundException.getMessage();
+//        String expectedMessage = "Employee not found.";
+//
 //        //then
-//        assertThrows(newEmployeeRepository.findById(1));
-//    }
+//        assertTrue(actualMessage.contains(expectedMessage));
+
+        willDoNothing().given(employeeRepository).deleteById(anyInt());
+
+        employeeService.deleteEmployee(1);
+
+        verify(employeeRepository).deleteById(anyInt());
+        verifyNoMoreInteractions(employeeRepository);
+    }
 }

@@ -26,8 +26,6 @@ public class EmployeeController {
         this.employeeMapper = employeeMapper;
     }
 
-    //Todo: change all employeeRepository to employeeService upon update
-
     @GetMapping
     public List<EmployeeResponse> findAllEmployees() {
 
@@ -41,7 +39,6 @@ public class EmployeeController {
         return this.employeeMapper.toResponse(employeeService.findById(id));
     }
 
-//todo: change all to mappers/response
     // /employees?gender=male
     @GetMapping(params = "gender")
     public List<EmployeeResponse> findByGender(@RequestParam String gender) {
@@ -69,17 +66,9 @@ public class EmployeeController {
     }
 
     //todo: change to update, not edit
-    //todo: delete logic
     // Put
     @PutMapping("/{id}")
     public Employee editEmployee(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
-        Employee originEmployee = this.employeeService.findById(id);
-        if (updatedEmployee.getAge() != null) {
-            originEmployee.setAge(updatedEmployee.getAge());
-        }
-        if (updatedEmployee.getSalary() != null) {
-            originEmployee.setSalary(updatedEmployee.getSalary());
-        }
-        return this.employeeService.editEmployee(id, originEmployee);
+        return this.employeeService.editEmployee(id, updatedEmployee);
     }
 }

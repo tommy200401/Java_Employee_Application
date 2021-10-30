@@ -54,5 +54,10 @@ public class EmployeeService {
     public void deleteEmployee(Integer id){
         // Create new employee first, in case non-exist ID, findById will return exception
         Employee employee = this.findById(id);
-        this.employeeRepository.delete(employee);}
+        this.employeeRepository.delete(employee);
+    }
+
+    public void deleteAllEmployee() {
+        this.employeeRepository.deleteAll();
+    }
 }

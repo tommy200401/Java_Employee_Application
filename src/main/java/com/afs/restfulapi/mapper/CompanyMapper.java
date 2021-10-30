@@ -22,7 +22,8 @@ public class CompanyMapper {
         CompanyResponse companyResponse = new CompanyResponse();
         companyResponse.setId(company.getCompanyId());
         companyResponse.setName(company.getCompanyName());
-        companyResponse.setEmployees(company.getEmployees().stream().map(employee -> employeeMapper.toResponse(employee)).collect(Collectors.toList()));
+        companyResponse.setEmployees(company.getEmployees().stream()
+                .map(employee -> employeeMapper.toResponse(employee)).collect(Collectors.toList()));
         return companyResponse;
     }
 }

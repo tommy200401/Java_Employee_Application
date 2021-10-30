@@ -41,7 +41,6 @@ class EmployeeControllerTest {
         //given
         Employee employee1 = new Employee("Tommy", 20, "M", 123);
         Employee employee2 = new Employee("John", 25, "M", 12345);
-        //todo: change to save
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
 

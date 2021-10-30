@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -46,10 +45,10 @@ class CompanyServiceTest {
     void should_return_a_company_when_find_by_id_given_id() {
         //given
         Company company = new Company("AAPL");
-        when(companyRepository.findById(1)).thenReturn(company);
+        when(companyRepository.findById(1)).thenReturn(java.util.Optional.of(company));
 
         //when
-        Employee actual = companyService.findById(1);
+        Company actual = companyService.findById(1);
 
         //then
         assertSame(company, actual);
@@ -65,7 +64,7 @@ class CompanyServiceTest {
         Pageable pageable = PageRequest.of(0, 2);
         when(companyRepository.findAll(pageable)).thenReturn(new PageImpl<>(companies));
         //when
-        List<Employee> actual = companyService.findPagingCompanies(0,2);
+        List<Company> actual = companyService.findPagingCompanies(0,2);
         //then
         assertEquals(companies, actual);
     }
@@ -78,7 +77,7 @@ class CompanyServiceTest {
         when(companyRepository.save(company1)).thenReturn(company2);
 
         //when
-        Employee actual = companyService.createCompany(company1);
+        Company actual = companyService.createCompany(company1);
 
         //then
         assertNotNull(actual.getId());

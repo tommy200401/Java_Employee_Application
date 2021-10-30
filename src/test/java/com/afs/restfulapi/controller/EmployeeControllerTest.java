@@ -112,7 +112,6 @@ class EmployeeControllerTest {
         Employee employee1 = new Employee("Peter", 20, "M", 123);
         Employee employee2 = new Employee("Jeany", 25, "F", 12345);
         Employee employee3 = new Employee("Tommy", 25, "M", 123456);
-        //todo: change to save
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
         employeeRepository.save(employee3);
@@ -127,8 +126,7 @@ class EmployeeControllerTest {
                 .andExpect(jsonPath("$[0].name").value(employee3.getName()))
                 .andExpect(jsonPath("$[0].age").value(employee3.getAge()))
                 .andExpect(jsonPath("$[0].gender").value(employee3.getGender()))
-                .andExpect(jsonPath("$[0].salary").value(employee3.getSalary()))
-                .andExpect(jsonPath("$[1]").doesNotExist());
+                .andExpect(jsonPath("$[0].salary").value(employee3.getSalary()));
     }
 
     @Test

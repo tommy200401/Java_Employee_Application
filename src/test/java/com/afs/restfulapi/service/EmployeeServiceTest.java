@@ -84,12 +84,11 @@ public class EmployeeServiceTest {
                 new Employee("John", 20, "M", 12345),
                 new Employee("Peter", 25, "M", 123456));
         Pageable pageable = PageRequest.of(0, 2);
-        PageImpl<Employee> content = new PageImpl<>(employees, pageable, employees.size());
-        when(employeeRepository.findAll(pageable)).thenReturn(content);
+        when(employeeRepository.findAll(pageable)).thenReturn(new PageImpl<>(employees));
         //when
-        PageImpl<Employee> actual = employeeService.findPagingEmployees(pageable);
+        List<Employee> actual = employeeService.findPagingEmployees(0,2);
         //then
-        assertEquals(content, actual);
+        assertEquals(employees, actual);
     }
 
     @Test

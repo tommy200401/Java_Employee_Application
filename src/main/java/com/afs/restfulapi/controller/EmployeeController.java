@@ -42,13 +42,18 @@ public class EmployeeController {
     // /employees?gender=male
     @GetMapping(params = "gender")
     public List<EmployeeResponse> findByGender(@RequestParam String gender) {
-        return this.employeeService.findByGender(gender).stream().map(employee->employeeMapper.toResponse(employee)).collect(Collectors.toList());
+        return this.employeeService.findByGender(gender).stream()
+                .map(employee->employeeMapper.toResponse(employee)).collect(Collectors.toList());
     }
 
     // /employees?page=1&pageSize=5
     @GetMapping(params = {"page", "pageSize"})
-    public Page<EmployeeResponse> findByPageAndPageSize(@PageableDefault Pageable pageable) {
-        return employeeService.findPagingEmployees(pageable).map(employee->employeeMapper.toResponse(employee));
+    public List<EmployeeResponse> findByPageAndPageSize(@RequestParam Integer page,
+                                                        @RequestParam Integer pageSize) {
+        return employeeService.findPagingEmployees(page, pageSize)
+                .stream()
+                .map(employeeMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     // post

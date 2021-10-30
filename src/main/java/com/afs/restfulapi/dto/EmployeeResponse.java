@@ -5,6 +5,7 @@ public class EmployeeResponse {
     private String name;
     private Integer age;
     private String gender;
+    private Integer salary;
 
     public EmployeeResponse(){
     }
@@ -39,5 +40,13 @@ public class EmployeeResponse {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public Integer getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Integer salary) {
+        this.salary = salary;
     }
 }

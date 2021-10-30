@@ -4,6 +4,7 @@ import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.exception.EmployeeNotFoundException;
 import com.afs.restfulapi.repository.EmployeeRepository;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +29,8 @@ public class EmployeeService {
         return this.employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public PageImpl<Employee> findPagingEmployees(Pageable pageable) {
-        return (PageImpl<Employee>) this.employeeRepository.findAll(pageable);
+    public List<Employee> findPagingEmployees(int page, int pageSize) {
+        return this.employeeRepository.findAll(PageRequest.of(page, pageSize)).getContent();
     }
 
     public List<Employee> findByGender(String gender) {

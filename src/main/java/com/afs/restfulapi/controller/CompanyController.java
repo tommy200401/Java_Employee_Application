@@ -1,8 +1,13 @@
 package com.afs.restfulapi.controller;
 
+import com.afs.restfulapi.dto.CompanyRequest;
+import com.afs.restfulapi.dto.CompanyResponse;
+import com.afs.restfulapi.dto.EmployeeResponse;
 import com.afs.restfulapi.entity.Company;
 import com.afs.restfulapi.entity.Employee;
+import com.afs.restfulapi.mapper.CompanyMapper;
 import com.afs.restfulapi.repository.CompanyRepository;
+import com.afs.restfulapi.service.CompanyService;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -10,64 +15,71 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
 
-    private final CompanyRepository companyRepository;
+    private CompanyService companyService;
+    private CompanyMapper companyMapper;
 
-    public CompanyController(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    public CompanyController(CompanyService companyService, CompanyMapper companyMapper) {
+        this.companyService = companyService;
+        this.companyMapper = companyMapper;
     }
 
     @GetMapping
-    public List<Company> findAllCompanies() {
-        return this.companyRepository.findAll();
+    public List<CompanyResponse> findAllCompanies() {
+        return this.companyService.findAll().stream().map(company->companyMapper.toResponse(company)).collect(Collectors.toList());;
     }
 
     // /companies/{id}
     @GetMapping("/{id}")
-    public Company findById(@PathVariable Integer id) {
-        return this.companyRepository.findById(id);
+    public CompanyResponse findById(@PathVariable Integer id) {
+        return this.companyMapper.toResponse(companyService.findById(id));
     }
 
-     //companies/{id}/employees
-    @GetMapping("/{id}/employees")
-    public List<Employee> findEmployeesById(@PathVariable Integer id) {
-        return this.companyRepository.findEmployeesById(id);
-    }
+    // Todo: add method
+//     // /companies/{id}/employees
+//    @GetMapping("/{id}/employees")
+//    public List<CompanyResponse> getEmployeeListInCompanyById(@PathVariable Integer id) {
+//        return this.companyService.getEmployeeListInCompanyById(id)
+//                .stream()
+//                .map(companyMapper::toResponse)
+//                .collect(Collectors.toList());
+//    }
 
     // /companies?page=1&pageSize=5
-    @GetMapping(params = {"page", "size"})
-    public PageImpl<Company> findByPageAndPageSize(@PageableDefault Pageable pageable) {
-        return this.companyRepository.findPagingCompanies(pageable);
+    @GetMapping(params = {"page", "pageSize"})
+    public List<CompanyResponse> findByPageAndPageSize(@RequestParam Integer page,
+                                                        @RequestParam Integer pageSize) {
+        return companyService.findPagingCompanies(page, pageSize)
+                .stream()
+                .map(companyMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     // post
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)  // Code=201
-    public Company createCompany(@RequestBody Company company) {
-        return this.companyRepository.createCompany(company);
+    public Company createCompany(@RequestBody CompanyRequest companyRequest) {
+        return this.companyService.createCompany(companyMapper.toEntity(companyRequest));
     }
 
     // delete
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)  // Code=204
     public void deleteById(@PathVariable Integer id) {
-        this.companyRepository.deleteById(id);
+        this.companyService.deleteCompany(id);
     }
 
     // Put
-//    @PutMapping("/{id}")
-//    public Company editCompany(@PathVariable Integer id, @RequestBody Company updatedCompany) {
-//        Company originCompany = this.companyRepository.findById(id);
-//        if (updatedCompany.getBasicInfo() != null) {
-//            originCompany.setBasicInfo(updatedCompany.getBasicInfo());
-//        }
-//        if (updatedCompany.getEmployees() != null) {
-//            originCompany.setEmployees(updatedCompany.getEmployees());
-//        }
-//        return this.companyRepository.save(id, originCompany);
-//    }
+    //todo: change to update, not edit
+    // Put
+    @PutMapping("/{id}")
+    public Company editCompany(@PathVariable Integer id,
+                          @RequestBody Company updatedCompany) {
+        return this.companyService.editCompany(id, updatedCompany);
+    }
 }

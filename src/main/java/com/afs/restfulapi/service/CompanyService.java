@@ -3,7 +3,6 @@ package com.afs.restfulapi.service;
 import com.afs.restfulapi.entity.Company;
 import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.exception.CompanyNotFoundException;
-import com.afs.restfulapi.exception.EmployeeNotFoundException;
 import com.afs.restfulapi.repository.CompanyRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -55,5 +54,6 @@ public class CompanyService {
     public void deleteAllCompany() {
         this.newCompanyRepository.deleteAll();
     }
-    
+
+    //todo: add search employee by company id
 }

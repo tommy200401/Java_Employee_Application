@@ -22,7 +22,7 @@ public class CompanyRepository {
     }
 
     public Company findById(Integer id) {
-        return this.companies.stream().filter(item -> id.equals(item.getCompanyId())).findFirst().orElseThrow(CompanyNotFoundException::new);
+        return this.companies.stream().filter(item -> id.equals(item.getId())).findFirst().orElseThrow(CompanyNotFoundException::new);
     }
 
     public PageImpl<Company> findPagingCompanies(Pageable pageable) {
@@ -31,8 +31,8 @@ public class CompanyRepository {
     }
 
     public Company createCompany(Company company) {
-        int id = this.companies.stream().mapToInt(Company::getCompanyId).max().orElse(0) + 1;
-        company.setCompanyId(id);
+        int id = this.companies.stream().mapToInt(Company::getId).max().orElse(0) + 1;
+        company.setId(id);
         this.companies.add(company);
         return company;
     }
@@ -48,5 +48,8 @@ public class CompanyRepository {
     }
 
     public List<Employee> findEmployeesById(Integer id) { return null;
+    }
+
+    public void deleteAll() {
     }
 }

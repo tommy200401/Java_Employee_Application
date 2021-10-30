@@ -131,15 +131,16 @@ class EmployeeControllerTest {
 
     @Test
     void should_create_employee_when_post_given_an_employee() throws Exception {
+        //given
         Employee employee = new Employee("Peter", 20, "M", 123);
         String url = "/employees";
-
+        //when
         ResultActions result = mockMvc.perform(
                 post(url)
                         .contentType(APPLICATION_JSON)
                         .content(jsonMapper.writeValueAsString(employee))
         );
-
+        //then
         result
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(1))
@@ -152,41 +153,40 @@ class EmployeeControllerTest {
 
     @Test
     void should_update_employee_when_put_given_an_updated_employee() throws Exception {
+        //given
         Employee employee = new Employee("Peter", 20, "M", 123);
         Employee updated = employeeRepository.save(employee);
         updated.setAge(33);
         updated.setSalary(12345);
         String url = String.format("/employees/%d", updated.getId());
-
+        //when
         ResultActions result = mockMvc.perform(
                 put(url)
                         .contentType(APPLICATION_JSON)
                         .content(jsonMapper.writeValueAsString(updated))
         );
-
+        //then
         result
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(updated.getId()))
                 .andExpect(jsonPath("$.name").value(updated.getName()))
                 .andExpect(jsonPath("$.age").value(updated.getAge()))
                 .andExpect(jsonPath("$.gender").value(updated.getGender()))
-                .andExpect(jsonPath("$.salary").value(updated.getSalary()))
-        ;
+                .andExpect(jsonPath("$.salary").value(updated.getSalary()));
     }
 
     @Test
     void should_delete_employee_when_given_an_employee_id() throws Exception {
+        //given
         Employee employee = new Employee("Peter", 20, "M", 123);
         Employee saved = employeeRepository.save(employee);
         String url = String.format("/employees/%d", saved.getId());
-
+        //then
         assertEquals(1, employeeRepository.findAll().size());
         ResultActions result = mockMvc.perform(delete(url));
         assertEquals(0, employeeRepository.findAll().size());
-
         result
                 .andExpect(status().isNoContent())
-                .andExpect(jsonPath("$").doesNotExist())
-        ;
+                .andExpect(jsonPath("$").doesNotExist());
     }
 }

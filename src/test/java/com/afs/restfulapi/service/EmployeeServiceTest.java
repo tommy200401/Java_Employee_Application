@@ -128,22 +128,10 @@ public class EmployeeServiceTest {
 
     @Test
     void should_delete_employee_when_delete_employee_given_employee_id(){
-//        //given
-//        Employee employee = new Employee("John", 20, "M", 12345);
-//        when(employeeRepository.save(employee)).thenReturn(employee);
-//        when(employeeRepository.deleteById(1)).thenReturn()
-//
-//        //when
-//        String actualMessage = employeeNotFoundException.getMessage();
-//        String expectedMessage = "Employee not found.";
-//
-//        //then
-//        assertTrue(actualMessage.contains(expectedMessage));
-
+        //given
         willDoNothing().given(employeeRepository).deleteById(anyInt());
-
         employeeService.deleteEmployee(1);
-
+        //then
         verify(employeeRepository).deleteById(anyInt());
         verifyNoMoreInteractions(employeeRepository);
     }

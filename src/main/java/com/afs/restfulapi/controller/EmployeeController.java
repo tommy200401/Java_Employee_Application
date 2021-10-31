@@ -5,9 +5,6 @@ import com.afs.restfulapi.dto.EmployeeResponse;
 import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.mapper.EmployeeMapper;
 import com.afs.restfulapi.service.EmployeeService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

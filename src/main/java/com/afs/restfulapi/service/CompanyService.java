@@ -1,10 +1,13 @@
 package com.afs.restfulapi.service;
 
 import com.afs.restfulapi.entity.Company;
+import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.exception.CompanyNotFoundException;
 import com.afs.restfulapi.repository.CompanyRepository;
+import com.afs.restfulapi.repository.EmployeeRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -12,9 +15,11 @@ import java.util.List;
 public class CompanyService {
     
     private final CompanyRepository companyRepository;
+    private final EmployeeRepository employeeRepository;
     
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(CompanyRepository companyRepository, EmployeeRepository employeeRepository) {
         this.companyRepository = companyRepository;
+        this.employeeRepository = employeeRepository;
     }
     
     public List<Company> findAll() {
@@ -52,6 +57,10 @@ public class CompanyService {
 
     public void deleteAllCompany() {
         this.companyRepository.deleteAll();
+    }
+
+    public List<Employee> getEmployeeListInCompanyById(Integer id) {
+        return this.employeeRepository.findAllByCompanyId(id);
     }
 
     //todo: add search employee by company id

@@ -95,7 +95,8 @@ class CompanyControllerTest {
         companyRepository.save(company3);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get("/employees?page=1&pageSize=2"));
+        ResultActions resultActions = mockMvc.perform(get("/companies?page=1" +
+                "&pageSize=2"));
 
         //then
         resultActions

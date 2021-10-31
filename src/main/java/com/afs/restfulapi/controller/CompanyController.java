@@ -2,8 +2,10 @@ package com.afs.restfulapi.controller;
 
 import com.afs.restfulapi.dto.CompanyRequest;
 import com.afs.restfulapi.dto.CompanyResponse;
+import com.afs.restfulapi.dto.EmployeeResponse;
 import com.afs.restfulapi.entity.Company;
 import com.afs.restfulapi.mapper.CompanyMapper;
+import com.afs.restfulapi.mapper.EmployeeMapper;
 import com.afs.restfulapi.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +19,12 @@ public class CompanyController {
 
     private final CompanyService companyService;
     private final CompanyMapper companyMapper;
+    private final EmployeeMapper employeeMapper;
 
-    public CompanyController(CompanyService companyService, CompanyMapper companyMapper) {
+    public CompanyController(CompanyService companyService, CompanyMapper companyMapper, EmployeeMapper employeeMapper) {
         this.companyService = companyService;
         this.companyMapper = companyMapper;
+        this.employeeMapper = employeeMapper;
     }
 
     @GetMapping
@@ -36,13 +40,13 @@ public class CompanyController {
 
     // Todo: add method
     // /companies/{id}/employees
-//    @GetMapping("/{id}/employees")
-//    public List<CompanyResponse> getEmployeeListInCompanyById(@PathVariable Integer id) {
-//        return this.companyService.getEmployeeListInCompanyById(id)
-//                .stream()
-//                .map(companyMapper::toResponse)
-//                .collect(Collectors.toList());
-//    }
+    @GetMapping("/{id}/employees")
+    public List<EmployeeResponse> getEmployeeListInCompanyById(@PathVariable Integer id) {
+        return this.companyService.getEmployeeListInCompanyById(id)
+                .stream()
+                .map(employeeMapper::toResponse)
+                .collect(Collectors.toList());
+    }
 
     // /companies?page=1&pageSize=5
     @GetMapping(params = {"page", "pageSize"})

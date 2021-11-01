@@ -7,7 +7,6 @@ import java.util.List;
 @Entity
 public class Company {
 
-    //Todo: renamed companyId -> id, etc.
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;

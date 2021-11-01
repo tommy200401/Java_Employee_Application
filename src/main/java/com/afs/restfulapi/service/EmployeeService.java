@@ -3,14 +3,10 @@ package com.afs.restfulapi.service;
 import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.exception.EmployeeNotFoundException;
 import com.afs.restfulapi.repository.EmployeeRepository;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static org.testng.AssertJUnit.assertEquals;
 
 @Service
 public class EmployeeService {

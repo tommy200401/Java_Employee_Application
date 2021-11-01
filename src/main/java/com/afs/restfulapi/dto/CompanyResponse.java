@@ -1,7 +1,5 @@
 package com.afs.restfulapi.dto;
 
-import com.afs.restfulapi.entity.Employee;
-
 import java.util.List;
 
 public class CompanyResponse {

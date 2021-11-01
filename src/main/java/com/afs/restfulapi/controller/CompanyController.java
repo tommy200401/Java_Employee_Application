@@ -3,7 +3,6 @@ package com.afs.restfulapi.controller;
 import com.afs.restfulapi.dto.CompanyRequest;
 import com.afs.restfulapi.dto.CompanyResponse;
 import com.afs.restfulapi.dto.EmployeeResponse;
-import com.afs.restfulapi.entity.Company;
 import com.afs.restfulapi.mapper.CompanyMapper;
 import com.afs.restfulapi.mapper.EmployeeMapper;
 import com.afs.restfulapi.service.CompanyService;
@@ -38,7 +37,6 @@ public class CompanyController {
         return this.companyMapper.toResponse(companyService.findById(id));
     }
 
-    // Todo: add method
     // /companies/{id}/employees
     @GetMapping("/{id}/employees")
     public List<EmployeeResponse> getEmployeeListInCompanyById(@PathVariable Integer id) {
@@ -58,7 +56,6 @@ public class CompanyController {
                 .collect(Collectors.toList());
     }
 
-    //todo: change company to companyResponse
     // post
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)  // Code=201

@@ -62,8 +62,8 @@ public class CompanyController {
     // post
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)  // Code=201
-    public Company createCompany(@RequestBody CompanyRequest companyRequest) {
-        return this.companyService.createCompany(companyMapper.toEntity(companyRequest));
+    public CompanyResponse createCompany(@RequestBody CompanyRequest companyRequest) {
+        return companyMapper.toResponse(this.companyService.createCompany(companyMapper.toEntity(companyRequest)));
     }
 
     // delete
@@ -77,8 +77,9 @@ public class CompanyController {
     //todo: change to update, not edit
     // Put
     @PutMapping("/{id}")
-    public Company editCompany(@PathVariable Integer id,
-                          @RequestBody Company updatedCompany) {
-        return this.companyService.editCompany(id, updatedCompany);
+    public CompanyResponse editCompany(@PathVariable Integer id,
+                          @RequestBody CompanyRequest companyRequest) {
+        return companyMapper.toResponse(this.companyService.editCompany(id,
+                companyMapper.toEntity(companyRequest)));
     }
 }

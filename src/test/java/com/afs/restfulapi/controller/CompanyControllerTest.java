@@ -1,6 +1,7 @@
 package com.afs.restfulapi.controller;
 
 import com.afs.restfulapi.entity.Company;
+import com.afs.restfulapi.entity.Employee;
 import com.afs.restfulapi.repository.EmployeeRepository;
 import com.afs.restfulapi.repository.CompanyRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -147,7 +150,7 @@ class CompanyControllerTest {
     @Test
     void should_delete_company_when_given_an_company_id() throws Exception {
         //given
-        Company company = new Company("AAPL");
+        Company company = new Company(1,"AAPL");
         Company saved = companyRepository.save(company);
         String url = String.format("/company/%d", saved.getId());
         //then

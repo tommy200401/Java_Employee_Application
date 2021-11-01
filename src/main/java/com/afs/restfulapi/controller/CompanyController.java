@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/companies")
 public class CompanyController {
 
-    private final CompanyService companyService;
-    private final CompanyMapper companyMapper;
-    private final EmployeeMapper employeeMapper;
+    private CompanyService companyService;
+    private CompanyMapper companyMapper;
+    private EmployeeMapper employeeMapper;
 
     public CompanyController(CompanyService companyService, CompanyMapper companyMapper, EmployeeMapper employeeMapper) {
         this.companyService = companyService;

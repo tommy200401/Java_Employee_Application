@@ -1,4 +1,4 @@
 create table company(
-    companyId int not null auto_increment primary key,
-    companyName varchar(255) not null
+    id int not null auto_increment primary key,
+    name varchar(255) not null
 );

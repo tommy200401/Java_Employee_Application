@@ -3,6 +3,6 @@
      name varchar(255) not null,
      age int,
      salary int,
-     companyId int not null,
-     foreign key (companyId) references company(companyId)
+     company_id int not null,
+     foreign key (company_id) references company(id)
  );

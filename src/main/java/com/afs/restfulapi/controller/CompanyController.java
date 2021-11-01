@@ -58,6 +58,7 @@ public class CompanyController {
                 .collect(Collectors.toList());
     }
 
+    //todo: change company to companyResponse
     // post
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)  // Code=201
